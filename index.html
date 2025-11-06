@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Smart Bangla Prototype</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="main-body">
   <h1 class="site-title">SmartBangla: Empowering Citizens with AI-Driven Services and Healthcare</h1>
   <nav class="navbar">
@@ -37,10 +39,10 @@
     <h2 class="section-title">AI-Powered Bangla Medical Chatbot</h2>
     <p class="section-desc">
       Enter your symptoms (in Bangla):
-      <input class="symptom-input" type="text" placeholder="e.g., জ্বর, কাশি">
-      <button class="submit-btn">Check Possible Diseases</button>
+      <input class="symptom-input" id="symptomInput" type="text" placeholder="e.g., জ্বর, কাশি">
+      <button class="submit-btn" id="checkBtn">Check Possible Diseases</button>
     </p>
-    <div class="chatbot-result">
+    <div class="chatbot-result" id="chatbotResult">
       <b>Result (Demo):</b>
       <ul class="disease-list">
         <li>ফ্লু (Flu)</li>
@@ -56,5 +58,29 @@
       <li><b>Paracetamol</b>: New guideline for use published</li>
     </ul>
   </section>
+  <script>
+    // Simple symptom-disease mapping
+    const diseaseMap = {
+      'জ্বর': ['ফ্লু', 'ডেঙ্গু'],
+      'কাশি': ['সর্দি', 'নিউমোনিয়া'],
+      'মাথাব্যথা': ['মাইগ্রেন', 'টাইফয়েড'],
+      // Add more as needed
+    };
+
+    document.getElementById('checkBtn').addEventListener('click', function () {
+      const symptom = document.getElementById('symptomInput').value.trim();
+      const resultDiv = document.getElementById('chatbotResult');
+      resultDiv.innerHTML = ''; // Clear previous
+
+      if (symptom && diseaseMap[symptom]) {
+        let diseases = diseaseMap[symptom]
+          .map(name => `<li>${name}</li>`)
+          .join('');
+        resultDiv.innerHTML = `<b>সম্ভাব্য রোগ:</b><ul class="disease-list">${diseases}</ul>`;
+      } else if (symptom) {
+        resultDiv.innerHTML = `<span style="color:#a22;">দুঃখিত, এই লক্ষণের জন্য তথ্য নেই</span>`;
+      }
+    });
+  </script>
 </body>
 </html>
